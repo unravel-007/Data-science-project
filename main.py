@@ -51,5 +51,4 @@ for i in range(3):
 	print('Validation Accuracy : ', metrics.roc_auc_score(
 		ytest, models[i].predict(xtest)))
 	print()
-print(metrics.classification_report(ytest,
-									models[1].predict(xtest)))
+print(metrics.classification_report(ytest,models[1].predict(xtest)))

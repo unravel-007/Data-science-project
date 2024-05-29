@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Quality Prediction</title>
+</head>
+<body>
+    <h1>Wine Quality Prediction</h1>
+    <form action="/predict" method="post">
+        {% for feature in features %}
+        <div>
+            <label for="{{ feature }}">{{ feature }}</label>
+            <input type="text" id="{{ feature }}" name="{{ feature }}" required>
+        </div>
+        {% endfor %}
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+    <script>
+        document.querySelector('form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result);
+        });
+    </script>
+</body>
+</html>
+@app.route('/')
+def home():
+    return render_template('index.html', features=features.columns)
